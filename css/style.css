@@ -187,7 +187,22 @@ nav a[aria-current="page"] {
     nav ul { gap: 10px; }
     nav a { font-size: 0.8rem; }
     .brand-tagline { display: none; }
-    .brand img { height: 48px; width: auto; }
+    .brand img { height: 44px; width: auto; }
+    .brand-name { font-size: 0.8rem; }
+    .brand { gap: 8px; }
+}
+
+@media (max-width: 560px) {
+    .header-content { gap: 10px; padding: 10px var(--gutter); }
+    nav ul { gap: 6px; }
+    nav a { font-size: 0.72rem; }
+    .brand img { height: 36px; }
+    .brand-name { font-size: 0.72rem; }
+    .brand { gap: 6px; }
+}
+
+@media (max-width: 480px) {
+    .brand { display: none; }
 }
 
 /* ---------- LOGO HERO — sección logo de la carrera ---------- */
@@ -588,6 +603,132 @@ section.block.alt {
     );
 }
 
+/* ---------- SPONSOR GRID LARGE (patrocinadores principales) ---------- */
+.sponsor-grid-large {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.sponsor-item-large {
+    background: var(--blanco);
+    border-radius: var(--radius-md);
+    padding: 14px 17px;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--gris-borde);
+    transition: filter 0.2s ease;
+    overflow: hidden;
+}
+
+.sponsor-item-large img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+a.sponsor-item-large {
+    text-decoration: none;
+}
+
+.sponsor-item-large:hover {
+    filter: brightness(0.88);
+}
+
+@media (max-width: 600px) {
+    .sponsor-grid-large {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---------- SPONSOR GRID MEDIUM (0.6×) ---------- */
+.sponsor-grid-medium {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.sponsor-item-medium {
+    background: var(--blanco);
+    border-radius: var(--radius-md);
+    padding: 8px 10px;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--gris-borde);
+    transition: filter 0.2s ease;
+    overflow: hidden;
+}
+
+.sponsor-item-medium img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+a.sponsor-item-medium {
+    text-decoration: none;
+}
+
+.sponsor-item-medium:hover {
+    filter: brightness(0.88);
+}
+
+@media (max-width: 600px) {
+    .sponsor-grid-medium {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ---------- SPONSOR GRID SMALL (0.4×) ---------- */
+.sponsor-grid-small {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.sponsor-item-small {
+    background: var(--blanco);
+    border-radius: var(--radius-md);
+    padding: 6px 7px;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--gris-borde);
+    transition: filter 0.2s ease;
+    overflow: hidden;
+}
+
+.sponsor-item-small img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+a.sponsor-item-small {
+    text-decoration: none;
+}
+
+.sponsor-item-small:hover {
+    filter: brightness(0.88);
+}
+
+@media (max-width: 600px) {
+    .sponsor-grid-small {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
 /* ---------- INSTAGRAM SECTION ---------- */
 .ig-section {
     background: var(--verde);
@@ -646,6 +787,43 @@ section.block.alt {
     font-size: 1.4rem;
     text-align: center;
     padding: 12px;
+}
+
+/* ---------- PROMO SECTION ---------- */
+.promo-section {
+    background: var(--blanco);
+    padding: 64px 0;
+}
+
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.promo-item {
+    background: var(--blanco);
+    border-radius: var(--radius-md);
+    padding: 14px 17px;
+    border: 1.5px solid var(--gris-borde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+
+.promo-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .promo-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---------- FOOTER ---------- */
