@@ -1172,6 +1172,7 @@ footer.site-footer {
     gap: 20px;
     margin-top: 24px;
     max-width: 640px;
+    margin: 0 auto;
 }
 
 .contact-card {
