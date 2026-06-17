@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería | 5K y 10K Melocotón de Cieza</title>
-    <meta name="description" content="Galería de fotos y vídeos de la 5K y 10K Melocotón de Cieza. Disponible después del 14 de junio de 2026.">
+    <meta name="description" content="Galería de fotos de la 5K y 10K Melocotón de Cieza, organizada por bloques de la carrera.">
 
     <meta property="og:title" content="Galería | 5K y 10K Melocotón de Cieza">
-    <meta property="og:description" content="Fotos y vídeos por bloques: salida, 5K, 10K, inclusiva, pódium, ambiente.">
+    <meta property="og:description" content="Fotos de la carrera por bloques: salida, recorrido, llegada y ambiente.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://melocotondecieza5k10k.es/galeria/">
     <meta property="og:image" content="https://www.alcanzatumeta.es/uploads/Cartel/4c420b848f307be7d7d0869d0e48d75a.jpeg">
@@ -20,6 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/galeria.css">
+    <link rel="preconnect" href="https://drive.google.com">
     <link rel="icon" href="../assets/Logo_Siguiendoelplan2_IG.png" type="image/png">
 </head>
 
@@ -54,70 +56,40 @@
         </div>
     </section>
 
-    <main class="container legal-content" style="visibility: hidden;">
+    <main class="container gal-main">
 
-        <div class="note">
-            <strong>Cómo funcionará.</strong> Cada bloque enlazará a un álbum de <strong>Google Photos</strong> compartido por la organización. Las fotos se ven y se descargan desde Google Photos sin necesidad de cuenta. Los vídeos se embeben desde YouTube en cada álbum correspondiente.
-        </div>
+        <!-- ÍNDICE DE CATEGORÍAS -->
+        <section id="galIndice">
+            <div class="note gal-intro">
+                <strong>Cómo funciona.</strong> Elige un bloque y navega por los momentos de la carrera.
+                Cada miniatura abre la foto a tamaño completo; las marcadas con <strong>⧉</strong> son
+                carruseles (varias tomas del mismo instante). Puedes <strong>descargar el original</strong>
+                desde cada foto.
+            </div>
 
-        <h2>Álbumes (placeholder hasta postcarrera)</h2>
-        <div class="galeria-grid">
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Salida</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>5K</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>10K</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Carrera inclusiva</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Pódium y trofeos</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Patrocinadores</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Ambiente</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-            <a href="#" class="galeria-tile disabled" aria-disabled="true">
-                <div class="tile-content">
-                    <h3>Voluntarios</h3>
-                    <span>Disponible tras la carrera</span>
-                </div>
-            </a>
-        </div>
+            <div class="galeria-grid" id="galGridCategorias">
+                <div class="gal-spinner"></div>
+            </div>            
 
-        <h2>Vídeos</h2>
-        <p>Los vídeos del speaker, las cuñas de patrocinadores, resúmenes y entrevistas se publicarán en YouTube y se incrustarán aquí.</p>
+            <h2>¿Quieres retirar una imagen?</h2>
+            <p>Si apareces en alguna foto y prefieres que se retire, escríbenos a través de <a href="../contacto/">contacto </a>. Atenderemos cada solicitud individualmente.</p>
+        </section>
 
-        <h2>¿Quieres retirar una imagen?</h2>
-        <p>Si apareces en alguna foto y prefieres que se retire, escríbenos a través de <a href="../contacto/">contacto</a>. Atenderemos cada solicitud individualmente.</p>
+        <!-- VISTA DE CATEGORÍA -->
+        <section id="galCategoria" hidden>
+            <div class="gal-cat-header">
+                <a class="gal-volver" id="galVolver" href="./">← Álbumes</a>
+                <h2 class="gal-cat-title" id="galCatTitle"></h2>
+                <span class="gal-cat-count" id="galCatCount"></span>
+            </div>
+            <div class="gal-grid" id="galGrid"></div>
+            <div class="gal-sentinel" id="galSentinel" aria-hidden="true"></div>
+        </section>
+
     </main>
+
+    <!-- LIGHTBOX -->
+    <div class="gal-lightbox" id="galLightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" hidden></div>
 
     <footer class="site-footer">
         <div class="container">
@@ -170,6 +142,7 @@
 
     <script src="../js/main.js"></script>
     <script src="../js/cookie_consent.js"></script>
+    <script src="../js/galeria.js"></script>
 </body>
 
 </html>

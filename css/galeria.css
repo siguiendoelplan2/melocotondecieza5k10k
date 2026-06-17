@@ -1,0 +1,232 @@
+/* ============================================================
+   Galería de fotos — 5K y 10K Melocotón de Cieza
+   Estilos específicos de /galeria/ (índice → cuadrícula → lightbox)
+   Reutiliza los tokens de style.css (--verde, --naranja, etc.)
+   ============================================================ */
+
+.gal-main { padding-top: 28px; padding-bottom: 56px; }
+
+/* Aviso / intro reutiliza .note de style.css */
+.gal-intro { margin-bottom: 28px; }
+
+/* ---------- Índice de categorías (reutiliza .galeria-grid/.galeria-tile) ---------- */
+.galeria-tile .tile-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.35s ease;
+}
+.galeria-tile:hover .tile-bg { transform: scale(1.05); }
+.galeria-tile .tile-content { position: relative; z-index: 1; }
+.galeria-tile .tile-icon { font-size: 1.1rem; }
+
+/* ---------- Cabecera de categoría ---------- */
+.gal-cat-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    margin-bottom: 20px;
+}
+.gal-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--verde);
+    border: 2px solid var(--gris-borde);
+    border-radius: var(--radius-sm);
+    padding: 7px 14px;
+    background: var(--blanco);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+}
+.gal-volver:hover { border-color: var(--naranja); color: var(--naranja); }
+.gal-cat-title { margin: 0; font-size: 1.6rem; }
+.gal-cat-title .gal-icon { margin-right: 6px; }
+.gal-cat-count { color: var(--tinta-suave); font-size: 0.9rem; }
+
+/* ---------- Cuadrícula de celdas ---------- */
+.gal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+.gal-cell {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--gris-borde);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+}
+.gal-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+.gal-cell img.cargada { opacity: 1; }
+.gal-cell:hover img { transform: scale(1.06); }
+.gal-cell:focus-visible { outline: 3px solid var(--naranja); outline-offset: 2px; }
+.gal-cell-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(26, 26, 26, 0.72);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 99px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ---------- Carga incremental ---------- */
+.gal-sentinel { height: 1px; }
+.gal-loadmore-wrap { text-align: center; margin-top: 22px; }
+.gal-spinner {
+    width: 30px; height: 30px;
+    margin: 18px auto;
+    border: 3px solid var(--gris-borde);
+    border-top-color: var(--naranja);
+    border-radius: 50%;
+    animation: gal-spin 0.7s linear infinite;
+}
+@keyframes gal-spin { to { transform: rotate(360deg); } }
+
+/* ---------- Lightbox ---------- */
+.gal-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(10, 12, 12, 0.94);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    -webkit-tap-highlight-color: transparent;
+}
+.gal-lightbox[hidden] { display: none; }
+.gal-lb-stage {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+.gal-lb-img {
+    max-width: 92vw;
+    max-height: 78vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.gal-lb-img.cargada { opacity: 1; }
+.gal-lb-spinner {
+    position: absolute;
+    width: 38px; height: 38px;
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: gal-spin 0.7s linear infinite;
+}
+.gal-lb-error {
+    position: absolute;
+    color: #fff;
+    text-align: center;
+    max-width: 80vw;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.gal-lb-error a { color: var(--amarillo); }
+
+/* Botones del lightbox */
+.gal-lb-btn {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+.gal-lb-btn:hover { background: rgba(255, 255, 255, 0.28); }
+.gal-lb-prev, .gal-lb-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+}
+.gal-lb-prev { left: 10px; }
+.gal-lb-next { right: 10px; }
+.gal-lb-close {
+    top: 10px; right: 10px;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+}
+.gal-lb-bar {
+    width: 100%;
+    max-width: 920px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #fff;
+    padding: 12px 4px 2px;
+    flex-shrink: 0;
+}
+.gal-lb-caption { font-size: 0.85rem; opacity: 0.85; }
+.gal-lb-counter { font-size: 0.85rem; font-weight: 700; opacity: 0.95; }
+.gal-lb-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--naranja);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 9px 16px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s;
+}
+.gal-lb-download:hover { background: var(--naranja-intenso); color: #fff; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .gal-grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 6px; }
+    .gal-cat-title { font-size: 1.3rem; }
+    .gal-lb-img { max-width: 96vw; max-height: 72vh; }
+    .gal-lb-prev, .gal-lb-next { width: 42px; height: 42px; font-size: 1.3rem; }
+    .gal-lb-bar { flex-wrap: wrap; justify-content: center; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gal-cell img, .galeria-tile .tile-bg { transition: none; }
+    .gal-spinner, .gal-lb-spinner { animation: none; }
+}
