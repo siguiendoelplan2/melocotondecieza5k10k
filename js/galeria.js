@@ -16,19 +16,26 @@
     var DRIVE_DOWNLOAD = "https://drive.google.com/uc?export=download&id=%ID%";
 
     var data = null;                // gallery.json
-    var catsById = {};
+    var catsById = Object.create(null);   // sin prototipo: evita prototype-pollution vía ?cat=__proto__/toString
     var view = { catId: null, offset: 0, observer: null };
     var lb = { open: false, items: null, idx: 0, catNombre: "" };
 
     var els = {};
 
     /* ---------- Utilidades ---------- */
+    // Escapa texto antes de insertarlo como HTML (defensa XSS, aunque gallery.json sea propio)
+    function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+    }
     function thumbLocal(catId, nombre) {
         var base = nombre.replace(/\.[^.]+$/, "");
-        return "./thumbs/" + catId + "/" + encodeURIComponent(base) + ".jpg";
+        return "./thumbs/" + encodeURIComponent(catId) + "/" + encodeURIComponent(base) + ".jpg";
     }
-    function driveView(id) { return DRIVE_VIEW.replace("%ID%", id); }
-    function driveDownload(id) { return DRIVE_DOWNLOAD.replace("%ID%", id); }
+    // encodeURIComponent en el id: lo hace seguro tanto en la URL como dentro de innerHTML
+    function driveView(id) { return DRIVE_VIEW.replace("%ID%", encodeURIComponent(id)); }
+    function driveDownload(id) { return DRIVE_DOWNLOAD.replace("%ID%", encodeURIComponent(id)); }
     function itemsDeCelda(celda) { return Array.isArray(celda) ? celda : [celda]; }
     function coverDeCelda(celda) { return itemsDeCelda(celda)[0]; }
     function fotosDeCategoria(cat) {
@@ -87,7 +94,7 @@
             var content = document.createElement("div");
             content.className = "tile-content";
             content.innerHTML =
-                "<h3><span class='tile-icon'>" + (cat.icono || "") + "</span> " + cat.nombre + "</h3>" +
+                "<h3><span class='tile-icon'>" + esc(cat.icono || "") + "</span> " + esc(cat.nombre) + "</h3>" +
                 "<span>" + nFotos + " foto" + (nFotos === 1 ? "" : "s") + "</span>";
             a.appendChild(content);
             a.addEventListener("click", function (ev) {
@@ -109,7 +116,7 @@
 
         els.indice.hidden = true;
         els.categoria.hidden = false;
-        els.catTitle.innerHTML = "<span class='gal-icon'>" + (cat.icono || "") + "</span>" + cat.nombre;
+        els.catTitle.innerHTML = "<span class='gal-icon'>" + esc(cat.icono || "") + "</span>" + esc(cat.nombre);
         var nFotos = cat.totalFotos != null ? cat.totalFotos : fotosDeCategoria(cat);
         els.catCount.textContent = nFotos + " fotos · " + cat.celdas.length + " momentos";
         els.grid.innerHTML = "";
@@ -249,7 +256,7 @@
         var bar = document.createElement("div");
         bar.className = "gal-lb-bar";
         bar.innerHTML =
-            "<span class='gal-lb-caption'>" + lb.catNombre + "</span>" +
+            "<span class='gal-lb-caption'>" + esc(lb.catNombre) + "</span>" +
             "<span class='gal-lb-counter'>" + (multi ? (lb.idx + 1) + " / " + lb.items.length : "") + "</span>";
         var dl = document.createElement("a");
         dl.className = "gal-lb-download";
